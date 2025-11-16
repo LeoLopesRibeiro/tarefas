@@ -22,14 +22,27 @@ public class TarefaRestController {
     @Autowired
     private TarefaService service;
 
-    @GetMapping
-    public List<Tarefa> listar(){
-       return service.findAll();
-    }
-
-    @PostMapping("/cadastrar")
-    public ResponseEntity<Tarefa> cadastrar(@RequestBody @Valid TarefaDTO tarefa){
+    @PostMapping
+    public ResponseEntity<Tarefa> cadastrar(@RequestBody @Valid TarefaDTO tarefa) {
         Tarefa tarefaCriada = service.criarTarefa(tarefa);
         return ResponseEntity.status(HttpStatus.CREATED).body(tarefaCriada);
     }
+
+    @GetMapping
+    public List<Tarefa> listar() {
+        return service.findAll();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> excluir(@PathVariable Integer id) {
+        service.excluir(id);
+        return ResponseEntity.noContent().build();
+    }
+    
+    // @PutMapping("/{id}")
+    // public ResponseEntity<Void> alterar(@PathVariable Integer id) {
+    //     service.alterar(id);
+    //     return ResponseEntity.noContent().build();
+    // }
+
 }

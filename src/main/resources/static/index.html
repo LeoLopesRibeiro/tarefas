@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gerenciador de Tarefas</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="task-manager">
+            <h2>Gerenciador de Tarefas</h2>
+
+            <div id="tasksContainer">
+                <!-- As tarefas da API aparecerão aqui -->
+
+                <button type="button">Editar</button>
+
+                <button type="button">Excluir</button>
+
+            </div>
+
+            <button class="btn-add-task" id="btnIncluirTarefa">Incluir nova tarefa</button>
+
+            <!-- Formulário nova tarefa - inicialmente oculto -->
+            <form id="formNovaTarefa">
+                <h3>Nova tarefa</h3>
+
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" />
+
+                <label for="responsavel">Responsável</label>
+                <input type="text" id="responsavel" name="responsavel" />
+
+                <label for="dataTermino">Data de término</label>
+                <input type="date" id="dataTermino" name="dataTermino" />
+
+                <label for="detalhamento">Detalhamento</label>
+                <textarea id="detalhamento" name="detalhamento"></textarea>
+
+                <button type="submit" class="btn-save-task">Salvar</button>
+            </form>
+            <p id="msgErro"></p>
+            <p id="msgSucesso"></p>
+        </div>
+
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>

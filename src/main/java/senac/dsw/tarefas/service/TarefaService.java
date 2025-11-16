@@ -7,15 +7,17 @@ import senac.dsw.tarefas.model.TarefaDTO;
 import senac.dsw.tarefas.repository.TarefaRepository;
 
 import java.util.List;
+
 @Service
 public class TarefaService {
     @Autowired
     TarefaRepository repository;
-    public List<Tarefa> findAll(){
+
+    public List<Tarefa> findAll() {
         return repository.findAll();
     }
 
-    public Tarefa criarTarefa(TarefaDTO tarefaDTO){
+    public Tarefa criarTarefa(TarefaDTO tarefaDTO) {
         Tarefa tarefa = new Tarefa();
         tarefa.setNome(tarefaDTO.getNome());
         tarefa.setResponsavel(tarefaDTO.getResponsavel());
@@ -23,4 +25,18 @@ public class TarefaService {
         tarefa.setDetalhamento(tarefaDTO.getDetalhamento());
         return repository.save(tarefa);
     }
+
+    public void excluir(Integer id) {
+        if (!repository.existsById(id)) {
+            throw new RuntimeException("Tarefa não encontrada");
+        }
+        repository.deleteById(id);
+    }
+    
+    // public void alterar(Integer id) {
+    //     if (!repository.existsById(id)) {
+    //         throw new RuntimeException("Tarefa não encontrada");
+    //     }
+    //     repository.(id);
+    // }
 }
