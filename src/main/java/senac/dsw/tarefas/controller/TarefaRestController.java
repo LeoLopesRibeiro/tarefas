@@ -22,7 +22,7 @@ public class TarefaRestController {
     @Autowired
     private TarefaService service;
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     public ResponseEntity<Tarefa> cadastrar(@RequestBody @Valid TarefaDTO tarefa) {
         Tarefa tarefaCriada = service.criarTarefa(tarefa);
         return ResponseEntity.status(HttpStatus.CREATED).body(tarefaCriada);
@@ -33,16 +33,23 @@ public class TarefaRestController {
         return service.findAll();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Tarefa> buscarPorId(@PathVariable Integer id) {
+        Tarefa tarefa = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
+        return ResponseEntity.ok(tarefa);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Integer id) {
         service.excluir(id);
         return ResponseEntity.noContent().build();
     }
-    
-    // @PutMapping("/{id}")
-    // public ResponseEntity<Void> alterar(@PathVariable Integer id) {
-    //     service.alterar(id);
-    //     return ResponseEntity.noContent().build();
-    // }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> editar(@PathVariable Integer id, @RequestBody @Valid TarefaDTO tarefaDTO) {
+        service.editar(id, tarefaDTO);
+        return ResponseEntity.noContent().build();
+    }
 
 }

@@ -14,17 +14,11 @@
             <h2>Gerenciador de Tarefas</h2>
 
             <div id="tasksContainer">
-                <!-- As tarefas da API aparecerão aqui -->
-
-                <button type="button">Editar</button>
-
-                <button type="button">Excluir</button>
 
             </div>
 
             <button class="btn-add-task" id="btnIncluirTarefa">Incluir nova tarefa</button>
 
-            <!-- Formulário nova tarefa - inicialmente oculto -->
             <form id="formNovaTarefa">
                 <h3>Nova tarefa</h3>
 
@@ -40,6 +34,7 @@
                 <label for="detalhamento">Detalhamento</label>
                 <textarea id="detalhamento" name="detalhamento"></textarea>
 
+                <button type="button" class="btn-cancel-task" onclick="cancelarAcao()">Cancelar</button>
                 <button type="submit" class="btn-save-task">Salvar</button>
             </form>
             <p id="msgErro"></p>

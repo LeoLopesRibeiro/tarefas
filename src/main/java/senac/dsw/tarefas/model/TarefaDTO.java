@@ -15,7 +15,6 @@ public class TarefaDTO {
     private String nome;
 
     @NotBlank(message = "O Responsável não pode estar vazio")
-    // @Size(min = 1, max = 100)
     private String responsavel;
 
     @NotNull(message = "A data de término é obrigatória")

@@ -75,13 +75,11 @@ body {
     line-height: 1.5;
 }
 
-/* Formulário nova tarefa */
 #formNovaTarefa {
     border: 1px solid #375a70;
     padding: 15px 20px;
     background: white;
     display: none;
-    /* começa oculto */
 }
 
 #formNovaTarefa h3 {
