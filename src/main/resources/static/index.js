@@ -7,7 +7,7 @@ const msgErro = document.getElementById('msgErro');
 const API_URL = 'http://localhost:8080/tarefas';
 
 let tarefaIdParaExcluir = null;
-let tarefaNomeParaExcluir = "";
+let tarefaTituloParaExcluir = "";
 
 function formatDate(dateStr) {
     const date = new Date(dateStr + "T00:00:00");
@@ -60,7 +60,7 @@ document.getElementById("btnCancelarModal").onclick = function () {
 };
 
 document.getElementById("btnConfirmarModal").onclick = async function () {
-    if (tarefaIdParaExcluir !== null && tarefaNome) {
+    if (tarefaIdParaExcluir !== null && tarefaTitulo) {
         await excluirTarefa(tarefaIdParaExcluir);
     }
     document.getElementById("modalConfirmacao").style.display = "none";
