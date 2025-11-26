@@ -11,8 +11,8 @@ public class TarefaDTO {
 
     private Integer id;
 
-    @NotBlank(message = "O nome não pode estar vazio")
-    private String nome;
+    @NotBlank(message = "O titulo não pode estar vazio")
+    private String titulo;
 
     @NotBlank(message = "O Responsável não pode estar vazio")
     private String responsavel;

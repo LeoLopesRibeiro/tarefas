@@ -24,7 +24,7 @@ public class TarefaService {
     
     public Tarefa criarTarefa(TarefaDTO tarefaDTO) {
         Tarefa tarefa = new Tarefa();
-        tarefa.setNome(tarefaDTO.getNome());
+        tarefa.setTitulo(tarefaDTO.getTitulo());
         tarefa.setResponsavel(tarefaDTO.getResponsavel());
         tarefa.setDataTermino(tarefaDTO.getDataTermino());
         tarefa.setDetalhamento(tarefaDTO.getDetalhamento());
@@ -43,7 +43,7 @@ public class TarefaService {
         Tarefa tarefa = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
 
-        tarefa.setNome(tarefaDTO.getNome());
+        tarefa.setTitulo(tarefaDTO.getTitulo());
         tarefa.setResponsavel(tarefaDTO.getResponsavel());
         tarefa.setDataTermino(tarefaDTO.getDataTermino());
         tarefa.setDetalhamento(tarefaDTO.getDetalhamento());

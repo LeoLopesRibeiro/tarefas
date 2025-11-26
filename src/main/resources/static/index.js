@@ -6,6 +6,9 @@ const msgErro = document.getElementById('msgErro');
 
 const API_URL = 'http://localhost:8080/tarefas';
 
+let tarefaIdParaExcluir = null;
+let tarefaNomeParaExcluir = "";
+
 function formatDate(dateStr) {
     const date = new Date(dateStr + "T00:00:00");
     const day = String(date.getDate()).padStart(2, '0');
@@ -14,36 +17,62 @@ function formatDate(dateStr) {
     return `${day}/${month}/${year}`;
 }
 
-function isLate(dateStr) {
-    const today = new Date();
-    const date = new Date(dateStr);
-    today.setHours(0, 0, 0, 0);
-    date.setHours(0, 0, 0, 0);
-    return date < today;
-}
-
 function createTaskHTML(task) {
-    const lateClass = isLate(task.dataTermino) ? `<span class="late-label">ATRASADA</span>` : '';
+ //formNovaTarefa.style.display = 'none';
     return `
         <div class="task">
-            <h3>${task.nome} ${lateClass}</h3>
-            <p>Responsável: <strong>${task.responsavel}</strong></p>
-            <p>Data de término: <strong>${formatDate(task.dataTermino)}</strong></p>
-            <p class="description">${task.detalhamento}</p>
+             <h3>${task.titulo}</h3>
 
-            <button class="btn-delete-task" onclick="excluirTarefa(${task.id})">Excluir</button>
-            
-            <button class="btn-edit-task" onclick="abrirEdicao(${task.id})">Editar</button>
+            <p>Responsável: <strong>${task.responsavel}</strong></p>
+           <p>
+             Data de término:
+             <strong style="color: ${task.atrasada ? 'red' : 'black'};">
+               ${formatDate(task.dataTermino)}
+               ${task.atrasada ? '(Tarefa atrasada)': ''}
+             </strong>
+           </p>
+            <p class="description">Detalhamento:<br>
+            ${task.detalhamento}</p>
+
+            <div class="buttons">
+             <button class="btn-edit-task" onclick="abrirEdicao(${task.id})">Editar</button>
+             <button class="btn-delete-task" onclick='abrirModal(${task.id}, ${JSON.stringify(task.titulo)})'>Excluir</button>
+            </div>
+
 
         </div>
     `;
 }
 
+function abrirModal(id, titulo) {
+ tarefaIdParaExcluir = id;
+    tarefaTitulo = titulo;
+
+    const texto = document.getElementById("modalTexto");
+    texto.innerHTML = `Tem certeza que deseja excluir a tarefa <strong>${tarefaTitulo}</strong> (ID: ${id})?`;
+
+    document.getElementById("modalConfirmacao").style.display = "flex";
+    document.getElementById("modalConfirmacao").style.display = "flex";
+}
+
+document.getElementById("btnCancelarModal").onclick = function () {
+    document.getElementById("modalConfirmacao").style.display = "none";
+};
+
+document.getElementById("btnConfirmarModal").onclick = async function () {
+    if (tarefaIdParaExcluir !== null && tarefaNome) {
+        await excluirTarefa(tarefaIdParaExcluir);
+    }
+    document.getElementById("modalConfirmacao").style.display = "none";
+};
+
 async function carregarTarefas() {
     try {
         const response = await fetch(API_URL);
+
         if (!response.ok) throw new Error('Erro ao buscar tarefas');
         const data = await response.json();
+            console.log(data);
         tasksContainer.innerHTML = '';
         data.forEach(task => {
             tasksContainer.innerHTML += createTaskHTML(task);
@@ -55,7 +84,7 @@ async function carregarTarefas() {
 }
 
 btnIncluir.addEventListener('click', () => {
-    formNovaTarefa.style.display = 'block';
+    formNovaTarefa.style.display = 'flex';
     btnIncluir.style.display = 'none';
     msgSucesso.textContent = '';
     msgErro.textContent = '';
@@ -67,7 +96,7 @@ formNovaTarefa.addEventListener('submit', async (e) => {
     const idEdicao = formNovaTarefa.getAttribute("data-edit-id"); 
 
     const novaTarefa = {
-        nome: document.getElementById('nome').value.trim(),
+        titulo: document.getElementById('titulo').value.trim(),
         responsavel: document.getElementById('responsavel').value.trim(),
         dataTermino: document.getElementById('dataTermino').value,
         detalhamento: document.getElementById('detalhamento').value.trim(),
@@ -96,11 +125,11 @@ formNovaTarefa.addEventListener('submit', async (e) => {
             btnIncluir.style.display = 'block';
             await carregarTarefas();
         } else {
-            const errorData = await response.json();
-            const primeiraMensagem = Array.isArray(errorData)
-                ? errorData[0]
-                : (errorData.errors?.[0]?.defaultMessage || 'Erro ao salvar tarefa.');
-            msgErro.textContent = `Erro: ${primeiraMensagem}`;
+        const erros = await response.json();
+           const htmlErros = erros
+              .map(erro => `<p>${erro.mensagem}</p>`)
+              .join("");
+              document.getElementById("msgErro").innerHTML = htmlErros;
         }
     } catch (error) {
         msgErro.textContent = 'Erro de comunicação com o servidor.';
@@ -133,14 +162,14 @@ async function abrirEdicao(id) {
     });
     const task = await response.json();
 
-    document.getElementById('nome').value = task.nome;
+    document.getElementById('titulo').value = task.titulo;
     document.getElementById('responsavel').value = task.responsavel;
     document.getElementById('dataTermino').value = task.dataTermino;
     document.getElementById('detalhamento').value = task.detalhamento;
 
     formNovaTarefa.setAttribute("data-edit-id", id);
 
-    formNovaTarefa.style.display = "block";
+    formNovaTarefa.style.display = "flex";
     btnIncluir.style.display = "none";
     msgSucesso.textContent = "";
     msgErro.textContent = "";
