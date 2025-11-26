@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.*;
 
 @Entity
 @Data
@@ -16,8 +16,8 @@ public class Tarefa {
     Integer id;
 
     @NotNull
-    @Column(name = "nome")
-    String nome;
+    @Column(name = "titulo")
+    String titulo;
 
     @NotNull
     @Column(name = "responsavel")
@@ -30,4 +30,13 @@ public class Tarefa {
     @NotNull
     @Column(name = "detalhamento")
     String detalhamento;
+
+    public static boolean isDateLate(LocalDate dateToCheck) {
+        LocalDate today = LocalDate.now(ZoneId.systemDefault());
+        return dateToCheck.isBefore(today);
+    }
+
+    public boolean isAtrasada(){
+        return isDateLate(getDataTermino());
+    }
 }

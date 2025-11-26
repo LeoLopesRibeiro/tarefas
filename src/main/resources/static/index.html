@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gerenciador de Tarefas</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="task-manager">
+            <h2>Gerenciador de Tarefas</h2>
+
+            <div id="tasksContainer">
+
+            </div>
+
+            <button class="btn-add-task" id="btnIncluirTarefa">Incluir nova tarefa</button>
+
+            <form id="formNovaTarefa" style="display:none">
+
+                <div>
+                    <label for="titulo">Nome</label>
+                    <input type="text" id="titulo" name="titulo" />
+
+                    <label for="responsavel">Responsável</label>
+                    <input type="text" id="responsavel" name="responsavel" />
+
+                    <label for="dataTermino">Data de término</label>
+                    <input type="date" id="dataTermino" name="dataTermino" />
+                </div>
+                <div>
+                    <label for="detalhamento">Detalhamento</label>
+                    <textarea id="detalhamento" name="detalhamento"></textarea>
+
+                    <button type="button" class="btn-cancel-task" onclick="cancelarAcao()">Cancelar</button>
+                    <button type="submit" class="btn-save-task">Salvar</button>
+                    <p id="msgErro"></p>
+                    <p id="msgSucesso"></p>
+                </div>
+
+
+
+            </form>
+
+        </div>
+        <div id="modalConfirmacao" class="modal">
+            <div class="modal-content">
+                <h3>Confirmar exclusão</h3>
+                <p id="modalTexto">
+                    Tem certeza que deseja excluir esta tarefa?
+                </p>
+
+                <div class="modal-buttons">
+                    <button id="btnConfirmarModal" class="modal-btn confirm">Excluir</button>
+                    <button id="btnCancelarModal" class="modal-btn cancel">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <footer>
+        Nome: Leonardo Lopes RIbeiro
+        <br>
+        Nome: Henrique Nogueira Jaguara Lobo
+        <br>
+        Turma: Analise e Desenvolvimento de Sistemas, noite B, 3° semestre
+        <br>
+        2025
+    </footer>
+    <script src="index.js"></script>
+</body>
+
+</html>
