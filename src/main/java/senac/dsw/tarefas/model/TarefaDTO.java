@@ -11,10 +11,10 @@ public class TarefaDTO {
 
     private Integer id;
 
-    @NotBlank(message = "O titulo não pode estar vazio")
+    @NotBlank(message = "O título não pode estar vazio")
     private String titulo;
 
-    @NotBlank(message = "O Responsável não pode estar vazio")
+    @NotBlank(message = "O responsável não pode estar vazio")
     private String responsavel;
 
     @NotNull(message = "A data de término é obrigatória")
